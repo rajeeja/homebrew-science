@@ -1,9 +1,9 @@
 require 'formula'
 
 class Moab < Formula
-  homepage 'https://trac.mcs.anl.gov/projects/ITAPS/wiki/MOAB'
-  url 'https://bitbucket.org/fathomteam/moab/get/4.6.2.tar.gz'
-  sha1 'cecd30aaf9bdbb58078e06b0097a9144cac63d7f'
+  homepage 'https://sigma.mcs.anl.gov/moab-library'
+  url 'ftp://ftp.mcs.anl.gov/pub/fathom/moab-4.7.0RC1.tar.gz'
+  sha1 'ad69a021b49d7a9870ff908945d8c9221f51b66b'
 
   option 'without-check', "Skip build-time checks (not recommended)"
 
