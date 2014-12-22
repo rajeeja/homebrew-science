@@ -1,27 +1,30 @@
-require 'formula'
+require "formula"
 
 class Moab < Formula
-  homepage 'https://sigma.mcs.anl.gov/moab-library'
-  url 'ftp://ftp.mcs.anl.gov/pub/fathom/moab-4.7.0RC1.tar.gz'
-  sha1 'ad69a021b49d7a9870ff908945d8c9221f51b66b'
+  homepage "http://sigma.mcs.anl.gov"
+  url "http://ftp.mcs.anl.gov/pub/fathom/moab-nightly.tar.gz"
+  sha1 "78fddbda313e7f141014268a84c57ec23b6baf28"
 
-  option 'without-check', "Skip build-time checks (not recommended)"
+  depends_on :fortran
+  depends_on "autoconf" => :build
+  depends_on "automake" => :build
+  depends_on "libtool" => :build
 
-  depends_on :autoconf
-  depends_on :automake
-  depends_on :libtool
   depends_on 'netcdf'
   depends_on 'hdf5'
-  depends_on :fortran if build.with? 'check'
 
   def install
-    system "autoreconf", "--force", "--install"
-    system "./configure", "--disable-debug", "--disable-dependency-tracking",
-                          "--prefix=#{prefix}", "--libdir=#{libexec}/lib"
 
-    system "make install"
-    # Moab installs non-lib files in libdir. Link only the libraries.
-    lib.install_symlink Dir["#{libexec}/lib/*.a"]
-    system "make check" if build.with? 'check'
+    args = %W[
+      --prefix=#{prefix}
+      --disable-debug
+      --disable-dependency-tracking
+      --with-netcdf=#{Formula["netcdf"].opt_prefix}
+      --with-hdf5=#{Formula["hdf5"].opt_prefix}
+    ]
+    system "autoreconf",  "--force", "--install"
+    system "./configure", *args
+    system "make", "install"
   end
 end
+
