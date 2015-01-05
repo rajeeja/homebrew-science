@@ -3,15 +3,15 @@ require "formula"
 class Moab < Formula
   homepage "http://sigma.mcs.anl.gov"
   url "http://ftp.mcs.anl.gov/pub/fathom/moab-nightly.tar.gz"
-  sha1 "78fddbda313e7f141014268a84c57ec23b6baf28"
+  sha1 "cbc4fef48c5bea02c718034efc3dc2c7c7b1615c"
 
-  depends_on :fortran
   depends_on "autoconf" => :build
   depends_on "automake" => :build
   depends_on "libtool" => :build
 
   depends_on 'netcdf'
   depends_on 'hdf5'
+  depends_on 'gcc'
 
   def install
 
@@ -25,6 +25,6 @@ class Moab < Formula
     system "autoreconf",  "--force", "--install"
     system "./configure", *args
     system "make", "install"
+    system "make", "check"
   end
 end
-
